@@ -15,7 +15,7 @@ import {
 export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const auth = getAuth(app);
-
+  const GooGleprovider = new GoogleAuthProvider();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const signInWithGoogle = () => {
-    return signInWithPopup(auth, googleAuthProvider);
+    return signInWithPopup(auth, GooGleprovider);
   };
 
   useEffect(() => {
@@ -48,6 +48,7 @@ const AuthProvider = ({ children }) => {
     loading,
     createUser,
     signIn,
+    signInWithGoogle
   };
 
   return (

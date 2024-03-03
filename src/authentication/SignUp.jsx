@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { AuthContext } from './../AuthProvider/AuthProvider';
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "./../AuthProvider/AuthProvider";
 
 const SignUp = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const { user, createUser } = useContext(AuthContext);
+  const { user, createUser, signInWithGoogle } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,13 +17,23 @@ const SignUp = () => {
       await createUser(email, password);
 
       // The following code will be executed if the user is successfully created
-      console.log('User created successfully!');
+      console.log("User created successfully!");
     } catch (error) {
       // Handle any errors that occur during the user creation process
-      console.error('Error creating user:', error.message);
+      console.error("Error creating user:", error.message);
     }
   };
 
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   console.log(user);
 
   return (
@@ -76,10 +86,12 @@ const SignUp = () => {
               <a href="#">Forgot Password ?</a>
             </div>
             <button type="submit">Sign Up</button>
-            <div className="new_account">
-              Already have an account? <Link to="/signIn">Sign In</Link>
-            </div>
           </form>
+          <button onClick={handleGoogleSignIn}>SignUp with Google</button>
+
+          <div className="new_account">
+            Already have an account? <Link to="/signIn">Sign In</Link>
+          </div>
         </main>
       </div>
     </div>
