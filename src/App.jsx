@@ -1,8 +1,17 @@
 
 import './App.css'
+import { useState } from 'react';
 
 function App() {
 
+const  [name, setname] = useState(null);
+const [email, setEmail] = useState(null);
+const [password, setPassword] = useState(null)
+const handlesubmit=(e)=>{
+  e.preventDefault();
+
+console.log(name,email)
+}
 
   return (
 <div className='alignment'>
@@ -10,14 +19,14 @@ function App() {
    <header>
     <h4>Login</h4>
   </header>
-  <form className=''>
+  <form onSubmit={handlesubmit}>
     <div className="form_wrapper">
-      <input id="input" type="text" required/>
+      <input id="input" type="text" onChange={(e)=>setname(e.target.value)} required/>
       <label >Username</label>
       <i className="material-icons">person</i>
     </div>
     <div className="form_wrapper">
-      <input id="password" type="password" required/>
+      <input id="password" type="password" onChange={(e)=>setEmail(e.target.value)} required/>
       <label >Password</label>
       <i className="material-icons">lock</i>
     </div>
