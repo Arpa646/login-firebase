@@ -3,74 +3,87 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from './../AuthProvider/AuthProvider';
 
 const SignUp = () => {
-    const [name, setname] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
-const {user}=useContext(AuthContext)
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-console.log(user)
+  const { user, createUser } = useContext(AuthContext);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handlesubmit = (e) => {
-      e.preventDefault();
-  
-      console.log(name, email,password);
-    };
-    return (
-        <div>
-            <div className="alignment">
-      <main>
-        <header>
-          <h4>Registration</h4>
-        </header>
-        <form onSubmit={handlesubmit}>
-          <div className="form_wrapper">
-            <input
-              id="input"
-              type="text"
-              onChange={(e) => setname(e.target.value)}
-              required
-            />
-            <label>Username</label>
-            <i className="material-icons">person</i>
-          </div>
-          <div className="form_wrapper">
-            <input
-              id="email"
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <label>Email</label>
-            <i className="material-icons">email</i>
-          </div>
-          <div className="form_wrapper">
-            <input
-              id="password"
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <label>Password</label>
-            <i className="material-icons">lock</i>
-          </div>
+    try {
+      // Call the createUserWithEmailAndPassword function
+      await createUser(email, password);
 
-          <div className="remember_box">
-            <div className="remember">
-              <input type="checkbox" />
-              Remember me
+      // The following code will be executed if the user is successfully created
+      console.log('User created successfully!');
+    } catch (error) {
+      // Handle any errors that occur during the user creation process
+      console.error('Error creating user:', error.message);
+    }
+  };
+
+  console.log(user);
+
+  return (
+    <div>
+      <div className="alignment">
+        <main>
+          <header>
+            <h4>Registration</h4>
+          </header>
+          <form onSubmit={handleSubmit}>
+            <div className="form_wrapper">
+              <input
+                id="input"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+              <label>Username</label>
+              <i className="material-icons">person</i>
             </div>
-            <a href="#">Forgot Password ?</a>
-          </div>
-          <button>Sign Up</button>
-          <div className="new_account">
-             have account ? <Link to="/signIn">Sign In</Link>
-          </div>
-        </form>
-      </main>
+            <div className="form_wrapper">
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <label>Email</label>
+              <i className="material-icons">email</i>
+            </div>
+            <div className="form_wrapper">
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <label>Password</label>
+              <i className="material-icons">lock</i>
+            </div>
+
+            <div className="remember_box">
+              <div className="remember">
+                <input type="checkbox" />
+                Remember me
+              </div>
+              <a href="#">Forgot Password ?</a>
+            </div>
+            <button type="submit">Sign Up</button>
+            <div className="new_account">
+              Already have an account? <Link to="/signIn">Sign In</Link>
+            </div>
+          </form>
+        </main>
+      </div>
     </div>
-        </div>
-    );
+  );
 };
 
 export default SignUp;

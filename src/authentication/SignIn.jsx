@@ -1,15 +1,26 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const SignIn = () => {
   const [name, setname] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const {  signIn } = useContext(AuthContext);
   const handlesubmit = (e) => {
     e.preventDefault();
 
     console.log(name, email, password);
+    signIn(email, password)
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+
   return (
     <div>
       <div>
@@ -19,7 +30,6 @@ const SignIn = () => {
               <h4>LogIn</h4>
             </header>
             <form onSubmit={handlesubmit}>
-             
               <div className="form_wrapper">
                 <input
                   id="email"
