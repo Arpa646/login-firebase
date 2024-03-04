@@ -24,6 +24,7 @@ const SignUp = () => {
     }
   };
 
+
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then((result) => {
@@ -35,11 +36,57 @@ const SignUp = () => {
       });
   };
   console.log(user);
-
+console.log('this is user',user.displayName)
   return (
     <div>
-      <div className="alignment">
-        <main>
+
+{/* Open the modal using document.getElementById('ID').showModal() method */}
+
+
+
+
+<dialog id="my_modal_1" className="modal">
+  <div className="modal-box">
+    <h3 className="font-bold text-lg">Hello!</h3>
+    <h1>{user?.displayName}</h1>
+      <h1>{user?.email}</h1>
+   
+    <div className="modal-action">
+      <form method="dialog">
+      
+        <button className="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+
+
+
+
+
+
+
+
+<div  className="relative">
+  <div className="absolute top-0 right-0 overflow-hidden">
+    <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+      <img
+      
+      onClick={()=>document.getElementById('my_modal_1').showModal()}
+       src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+    </div>
+  </div>
+</div>
+
+
+      <div >
+
+
+
+
+  <div className="alignment">
+  <main>
           <header>
             <h4>Registration</h4>
           </header>
@@ -86,13 +133,15 @@ const SignUp = () => {
               <a href="#">Forgot Password ?</a>
             </div>
             <button type="submit">Sign Up</button>
+            <button onClick={handleGoogleSignIn}>SignUp with Google</button>
           </form>
-          <button onClick={handleGoogleSignIn}>SignUp with Google</button>
 
           <div className="new_account">
             Already have an account? <Link to="/signIn">Sign In</Link>
           </div>
         </main>
+  </div>
+       
       </div>
     </div>
   );
